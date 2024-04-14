@@ -1,7 +1,8 @@
 //
 //  DrawingCanvasView.swift
 //  IceManagement
-
+//
+// View for creating the view controller and passing data
 
 import SwiftUI
 import CoreData
@@ -21,6 +22,7 @@ struct DrawingCanvasView: UIViewControllerRepresentable {
     func makeUIViewController(context: Context) -> DrawingCanvasViewController {
         let viewController = DrawingCanvasViewController()
         viewController.drawingData = data
+        // Detects changes within the drawing
         viewController.drawingChanged = {data in
             let request: NSFetchRequest<Drawing> = Drawing.fetchRequest()
             let predicate = NSPredicate(format: "id == %@", id as CVarArg)

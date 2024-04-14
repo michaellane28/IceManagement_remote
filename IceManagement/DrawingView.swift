@@ -2,7 +2,7 @@
 //  DrawingView.swift
 //  IceManagement
 //
-
+// View for creating the new CanvasWithBackgroundView view
 
 import SwiftUI
 

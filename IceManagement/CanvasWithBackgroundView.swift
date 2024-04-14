@@ -2,7 +2,7 @@
 //  CanvasWithBackgroundView.swift
 //  IceManagement
 //
-
+// View for displaying both the background image and the canvas with the canvas data
 
 import SwiftUI
 

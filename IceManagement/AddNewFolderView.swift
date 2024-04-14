@@ -2,7 +2,7 @@
 //  AddNewFolderView.swift
 //  IceManagement
 //
-
+// View for when user clicks on "Add Folder" button on the navigation menu
 
 import SwiftUI
 
@@ -14,7 +14,7 @@ struct AddNewFolderView: View {
     var body: some View {
         NavigationView {
             Form {
-                Section(header: Text("Folder Name")) {
+                Section(header: Text("Folder Name")) { // Section for user to input folder name
                     TextField("Enter folder name", text: $folderName)
                 }
             }
@@ -27,6 +27,7 @@ struct AddNewFolderView: View {
         }
     }
 
+    // Function for creating and saving new folder to the navigation menu
     private func addFolder() {
         let newFolder = Folder(context: viewContext)
         newFolder.id = UUID()

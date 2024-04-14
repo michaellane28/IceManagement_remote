@@ -2,13 +2,14 @@
 //  DrawingCanvasViewController.swift
 //  IceManagement
 //
-
+// View Controller for displaying canvas and communicating changes
 
 import SwiftUI
 import PencilKit
 
 class DrawingCanvasViewController: UIViewController {
     
+    // Drawing Canvas
     lazy var canvas: PKCanvasView = {
         let view = PKCanvasView()
         view.drawingPolicy = .anyInput
@@ -18,7 +19,7 @@ class DrawingCanvasViewController: UIViewController {
         return view
     }()
     
-    
+    // Tool Bar for drawing
     lazy var toolPicker: PKToolPicker = {
         let toolPicker = PKToolPicker()
         toolPicker.addObserver(self)
@@ -31,7 +32,7 @@ class DrawingCanvasViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
+        // Adds canvas as a subview and adds constraints
         view.addSubview(canvas)
         NSLayoutConstraint.activate([
             
@@ -41,10 +42,11 @@ class DrawingCanvasViewController: UIViewController {
             canvas.bottomAnchor.constraint(equalTo: view.bottomAnchor)])
              
         
-        
+        // Properties for the canvas that ensure that the background image can be seen
         canvas.isOpaque = false
         canvas.backgroundColor = .clear
         
+        // Connects the Tool Picker to the canvas
         toolPicker.setVisible(true, forFirstResponder: canvas)
         toolPicker.addObserver(canvas)
         canvas.delegate = self

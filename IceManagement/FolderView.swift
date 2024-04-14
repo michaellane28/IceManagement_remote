@@ -2,7 +2,7 @@
 //  FolderView.swift
 //  IceManagement
 //
-
+//  View for when user clicks on existing folder
 
 import SwiftUI
 import CoreData
@@ -14,7 +14,7 @@ struct FolderView: View {
 
     var body: some View {
         List {
-            ForEach(folder.drawingsArray, id: \.id) { drawing in
+            ForEach(folder.drawingsArray, id: \.id) { drawing in // Displays the drawings in list format inside of folder
                 NavigationLink(destination: DrawingView(id: drawing.id, data: drawing.canvasData, title: drawing.title, backgroundImageName: drawing.backgroundImageName ?? "hockey_rink")) {
                     Text(drawing.title ?? "Untitled")
                 }
@@ -24,6 +24,7 @@ struct FolderView: View {
         .navigationBarTitle(Text(folder.name ?? ""), displayMode: .inline)
     }
 
+    // Function for deleting drawing inside of folder
     private func deleteDrawing(at offsets: IndexSet) {
         for index in offsets {
             let drawingToDelete = folder.drawingsArray[index]
