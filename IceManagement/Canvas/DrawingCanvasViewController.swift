@@ -18,14 +18,6 @@ class DrawingCanvasViewController: UIViewController {
         return view
     }()
     
-   /*
-    lazy var backgroundImage: UIImageView = {
-        let imageView = UIImageView(image: UIImage(named: "hockey_rink"))
-        imageView.contentMode = .scaleAspectFill // Adjust the content mode as needed
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        return imageView
-    }()
-     */
     
     lazy var toolPicker: PKToolPicker = {
         let toolPicker = PKToolPicker()
@@ -39,17 +31,9 @@ class DrawingCanvasViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-       // view.addSubview(backgroundImage)
         
         view.addSubview(canvas)
         NSLayoutConstraint.activate([
-           
-            /*
-            backgroundImage.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            backgroundImage.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            backgroundImage.topAnchor.constraint(equalTo: view.topAnchor),
-            backgroundImage.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-             */
             
             canvas.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             canvas.trailingAnchor.constraint(equalTo: view.trailingAnchor),
