@@ -10,35 +10,58 @@ struct AddNewFolderView: View {
     @Environment(\.managedObjectContext) var viewContext
     @Environment(\.presentationMode) var presentationMode
     @State private var folderName = ""
+    @State private var showAlert = false
+    
 
+    
     var body: some View {
         NavigationView {
             Form {
-                Section(header: Text("Folder Name")) { // Section for user to input folder name
+                Section(header: Text("Folder Name").foregroundColor(Color.black)) { // Section for user to input folder name
                     TextField("Enter folder name", text: $folderName)
+                    Text("Max 30 Characters")
+                        .font(.caption)
+                        .foregroundColor(.gray)
                 }
             }
-            .navigationBarTitle("New Folder", displayMode: .inline)
-            .navigationBarItems(leading: Button("Cancel") {
+            .scrollContentBackground(.hidden)
+            .background(Image("new_canvas_background").resizable().scaledToFill().edgesIgnoringSafeArea(.all))
+
+            .navigationBarItems(leading: Button(action: {
                 presentationMode.wrappedValue.dismiss()
-            }, trailing: Button("Save") {
-                addFolder()
-            })
+            }, label: {
+                Image(systemName: "xmark").foregroundColor(Color.white)
+            }), trailing: Button(action: addFolder, label: {
+                Text("Save").foregroundColor(Color.white)
+            }))
+            .alert(isPresented: $showAlert) {
+                Alert(
+                    title: Text("Folder name invalid"),
+                    message: Text("Folder name cannot be empty and should be MAX 30 characters"),
+                    dismissButton: .default(Text("OK"))
+                )
+            }
         }
     }
 
     // Function for creating and saving new folder to the navigation menu
     private func addFolder() {
-        let newFolder = Folder(context: viewContext)
-        newFolder.id = UUID()
-        newFolder.name = folderName
-        newFolder.creationDate = Date()
+        
+        // Checks if folder name is valid
+        if folderName.count > 30 || folderName == "" {
+            showAlert = true
+        } else {
+            let newFolder = Folder(context: viewContext)
+            newFolder.id = UUID()
+            newFolder.name = folderName
+            newFolder.creationDate = Date()
 
-        do {
-            try viewContext.save()
-            presentationMode.wrappedValue.dismiss()
-        } catch {
-            print("Error saving folder: \(error)")
+            do {
+                try viewContext.save()
+                presentationMode.wrappedValue.dismiss()
+            } catch {
+                print("Error saving folder: \(error)")
+            }
         }
     }
 }

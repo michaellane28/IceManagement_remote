@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A51A004E2BD233550098CD21 /* AddDrawingInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A51A004D2BD233550098CD21 /* AddDrawingInView.swift */; };
 		A5440CA82BC0A5A600408E16 /* IceManagementApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5440CA72BC0A5A600408E16 /* IceManagementApp.swift */; };
 		A5440CAA2BC0A5A600408E16 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5440CA92BC0A5A600408E16 /* ContentView.swift */; };
 		A5440CAC2BC0A5AA00408E16 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A5440CAB2BC0A5AA00408E16 /* Assets.xcassets */; };
@@ -23,6 +24,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		A51A004D2BD233550098CD21 /* AddDrawingInView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddDrawingInView.swift; sourceTree = "<group>"; };
 		A5440CA42BC0A5A600408E16 /* IceManagement.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = IceManagement.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A5440CA72BC0A5A600408E16 /* IceManagementApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IceManagementApp.swift; sourceTree = "<group>"; };
 		A5440CA92BC0A5A600408E16 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -81,6 +83,7 @@
 				A5440CBE2BC0A8CA00408E16 /* AddNewFolderView.swift */,
 				A5440CC02BC0A8D500408E16 /* FolderView.swift */,
 				A5440CC22BC0A8E600408E16 /* CanvasWithBackgroundView.swift */,
+				A51A004D2BD233550098CD21 /* AddDrawingInView.swift */,
 			);
 			path = IceManagement;
 			sourceTree = "<group>";
@@ -180,6 +183,7 @@
 				A5440CBF2BC0A8CA00408E16 /* AddNewFolderView.swift in Sources */,
 				A5440CC62BC0A91900408E16 /* DrawingCanvasViewController.swift in Sources */,
 				A5440CB12BC0A5AA00408E16 /* Persistence.swift in Sources */,
+				A51A004E2BD233550098CD21 /* AddDrawingInView.swift in Sources */,
 				A5440CBD2BC0A8BB00408E16 /* DrawingView.swift in Sources */,
 				A5440CAA2BC0A5A600408E16 /* ContentView.swift in Sources */,
 				A5440CA82BC0A5A600408E16 /* IceManagementApp.swift in Sources */,
