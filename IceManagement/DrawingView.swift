@@ -6,6 +6,7 @@
 
 
 import SwiftUI
+import Photos
 
 struct DrawingView: View {
     @Environment(\.managedObjectContext) var viewContext
@@ -17,6 +18,7 @@ struct DrawingView: View {
     @State var backgroundImageName: String
     
     @State private var showSavedMessage = false
+    @State private var showPermissionMessage = false
 
         
     var body: some View {
@@ -32,14 +34,29 @@ struct DrawingView: View {
                         }
         }
         .overlay(
-            savedMessageView
-                .opacity(showSavedMessage ? 1 : 0)
-            )
+            ZStack {
+                savedMessageView
+                    .opacity(showSavedMessage ? 1 : 0)
+                
+                permissionMessageView
+                    .opacity(showPermissionMessage ? 1 : 0)
+            }
+        )
     }
     
     var savedMessageView: some View {
         VStack {
             Image("image_saved")
+                .resizable()
+                .frame(width: 381, height: 113)
+                .scaledToFit()
+                .padding(.top, -360)
+        }
+    }
+    
+    var permissionMessageView: some View {
+        VStack {
+            Image("permission_denied")
                 .resizable()
                 .frame(width: 381, height: 113)
                 .scaledToFit()
@@ -85,19 +102,36 @@ struct DrawingView: View {
                 let trimmedHeight = Int(trimmedImage.size.height)
                 print("Trimmed image size: \(trimmedWidth) x \(trimmedHeight)")
                 
+                let status = PHPhotoLibrary.authorizationStatus()
                 
-                // Saves the trimmed image to the camera roll
-                UIImageWriteToSavedPhotosAlbum(trimmedImage, nil, nil, nil)
-                
-                withAnimation(.easeInOut(duration: 0.4)){
-                    showSavedMessage = true
-                }
-                
-                DispatchQueue.main.asyncAfter(deadline: .now() + 2.2) {
-                            withAnimation {
-                                showSavedMessage = false
+                switch status {
+                case .authorized:
+                    UIImageWriteToSavedPhotosAlbum(trimmedImage, nil, nil, nil)
+                    
+                    withAnimation(.easeInOut(duration: 0.4)){
+                        showSavedMessage = true
+                    }
+                    
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 2.2) {
+                                withAnimation {
+                                    showSavedMessage = false
+                                }
                             }
-                        }
+                case .denied, .restricted, .notDetermined:
+                    withAnimation(.easeInOut(duration: 0.4)){
+                        showPermissionMessage = true
+                    }
+                    
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 3.2) {
+                                withAnimation {
+                                    showPermissionMessage = false
+                                }
+                            }
+                case .limited:
+                    print("Limited")
+                @unknown default:
+                    print("Default")
+                }
                 
             }
             

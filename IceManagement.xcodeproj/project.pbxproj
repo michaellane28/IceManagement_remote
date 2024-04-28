@@ -322,7 +322,6 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = IceManagement/Info.plist;
 				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "Saves drawings to camera roll";
-				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "Allows app to save drawings to camera roll";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -353,7 +352,6 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = IceManagement/Info.plist;
 				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "Saves drawings to camera roll";
-				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "Allows app to save drawings to camera roll";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

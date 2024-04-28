@@ -195,9 +195,6 @@ struct ContentView: View {
                         }
                     )
                 }
-                .onAppear{
-                    requestPhotoLibraryAccess()
-                }
             }
         }
     
@@ -221,22 +218,6 @@ struct ContentView: View {
         }
     }
 
-    private func requestPhotoLibraryAccess() {
-            PHPhotoLibrary.requestAuthorization { status in
-                switch status {
-                case .authorized:
-                    print("Photo Library Access Granted")
-                case .denied, .restricted:
-                    print("Photo Library Access Denied or Restricted")
-                case .notDetermined:
-                    print("Photo Library Access State Not Determined")
-                case .limited:
-                    print("Photo Library Access Limited")
-                @unknown default:
-                    print("Unknown authorization status")
-                }
-            }
-        }
     
     // Function for deleting drawing
     private func deleteDrawing(at offsets: IndexSet) {
