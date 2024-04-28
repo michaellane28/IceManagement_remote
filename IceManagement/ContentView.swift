@@ -33,6 +33,9 @@ struct ContentView: View {
     @State private var showSheet = false
     @State private var selectedFolderForDeletion: Folder?
     @State private var showingDeletionAlert = false
+    
+    @State private var showFolderCreatedMessage = false
+    @State private var showDrawingCreatedMessage = false
 
     var body: some View {
         /*
@@ -126,14 +129,58 @@ struct ContentView: View {
                             }
                         }
                         .sheet(isPresented: $showSheet) {
-                            AddNewCanvasView().environment(\.managedObjectContext, viewContext)
+                            AddNewCanvasView(
+                                drawingCreationHandler: {
+                                    
+                                    withAnimation {
+                                                       showDrawingCreatedMessage = true
+                                                   }
+
+                                    // Optionally, hide the message after a certain duration
+                                                   DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+                                                       withAnimation {
+                                                           showDrawingCreatedMessage = false
+                                                       }
+                                                   }
+                                }
+                            ).environment(\.managedObjectContext, viewContext)
                         }
                     }
                 }
+                .overlay (
+                    ZStack {
+                        folderCreatedMessageView
+                            .opacity(showFolderCreatedMessage ? 1 : 0)
+                        
+                        drawingCreatedMessageView
+                            .opacity(showDrawingCreatedMessage ? 1 : 0)
+                    }
+                )
+                .ignoresSafeArea()
                 .scrollContentBackground(.hidden)
-                .background(Image("home_background").resizable().scaledToFill().edgesIgnoringSafeArea(.all)) // Background Image for homescreen
+                .background(
+                    GeometryReader { geometry in
+                            Image("home_background")
+                                .resizable()
+                                .scaledToFill()
+                                .frame(width: geometry.size.width)
+                        }
+                        .edgesIgnoringSafeArea(.all)
+                ) // Background Image for homescreen
                 .sheet(isPresented: $showingAddFolderView) {
-                    AddNewFolderView().environment(\.managedObjectContext, self.viewContext)
+                    AddNewFolderView(folderCreationHandler: {
+                        
+                        withAnimation {
+                                           showFolderCreatedMessage = true
+                                       }
+
+                        // Optionally, hide the message after a certain duration
+                                       DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+                                           withAnimation {
+                                               showFolderCreatedMessage = false
+                                           }
+                                       }
+                    }).environment(\.managedObjectContext, self.viewContext)
                 }
                 .alert(isPresented: $showingDeletionAlert) {
                     Alert(
@@ -153,6 +200,26 @@ struct ContentView: View {
                 }
             }
         }
+    
+    var folderCreatedMessageView: some View {
+        VStack {
+            Image("folder_created")
+                .resizable()
+                .frame(width: 381, height: 113)
+                .scaledToFit()
+                .padding(.top, -360)
+        }
+    }
+    
+    var drawingCreatedMessageView: some View {
+        VStack {
+            Image("drawing_created")
+                .resizable()
+                .frame(width: 381, height: 113)
+                .scaledToFit()
+                .padding(.top, -360)
+        }
+    }
 
     private func requestPhotoLibraryAccess() {
             PHPhotoLibrary.requestAuthorization { status in

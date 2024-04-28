@@ -13,7 +13,7 @@ struct FolderView: View {
     @Environment(\.presentationMode) var presentationMode
     @State private var showingAddDrawingView = false
     
-   
+    @State private var showDrawingCreatedMessage = false
 
     var body: some View {
         List {
@@ -54,13 +54,44 @@ struct FolderView: View {
                     }
                 }
                 .sheet(isPresented: $showingAddDrawingView) {
-                    AddDrawingInView(folder: folder).environment(\.managedObjectContext, viewContext)
+                    AddDrawingInView(
+                        folder: folder,
+                        drawingCreationHandler: {
+                            
+                            withAnimation {
+                                               showDrawingCreatedMessage = true
+                                           }
+
+                            // Optionally, hide the message after a certain duration
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 2.2) {
+                                               withAnimation {
+                                                   showDrawingCreatedMessage = false
+                                               }
+                                           }
+                        }
+                    
+                    ).environment(\.managedObjectContext, viewContext)
                 }
                 
             }
         }
+        .overlay(
+            ZStack {
+                drawingCreatedMessageView
+                    .opacity(showDrawingCreatedMessage ? 1 : 0)
+                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top) // Position at the top
+                }
+            )
         .scrollContentBackground(.hidden)
-        .background(Image("home_background").resizable().scaledToFill().edgesIgnoringSafeArea(.all))
+        .background(
+            GeometryReader { geometry in
+                    Image("home_background")
+                        .resizable()
+                        .scaledToFill()
+                        .frame(width: geometry.size.width)
+                }
+                .edgesIgnoringSafeArea(.all)
+        )
         .navigationBarBackButtonHidden(true) // Hide the default back button
         .navigationBarItems(leading: backButton)
         .navigationBarTitleDisplayMode(.large)
@@ -70,6 +101,16 @@ struct FolderView: View {
                         customTitleView
                     }
                 }
+    }
+    
+    var drawingCreatedMessageView: some View {
+        VStack {
+            Image("drawing_created")
+                .resizable()
+                .frame(width: 381, height: 113)
+                .scaledToFit()
+        }
+        .frame(maxWidth: .infinity, alignment: .top)
     }
     
     // Custome folder title for top of screen

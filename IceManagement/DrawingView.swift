@@ -4,6 +4,7 @@
 //
 // View for creating the new CanvasWithBackgroundView view
 
+
 import SwiftUI
 
 struct DrawingView: View {
@@ -14,7 +15,9 @@ struct DrawingView: View {
     @State var data: Data?
     @State var title: String?
     @State var backgroundImageName: String
-        
+    
+    @State private var showSavedMessage = false
+
         
     var body: some View {
         VStack {
@@ -28,7 +31,20 @@ struct DrawingView: View {
                             }
                         }
         }
-        
+        .overlay(
+            savedMessageView
+                .opacity(showSavedMessage ? 1 : 0)
+            )
+    }
+    
+    var savedMessageView: some View {
+        VStack {
+            Image("image_saved")
+                .resizable()
+                .frame(width: 381, height: 113)
+                .scaledToFit()
+                .padding(.top, -360)
+        }
     }
     
     // Customizes the drawing title at the top of the screen
@@ -69,8 +85,20 @@ struct DrawingView: View {
                 let trimmedHeight = Int(trimmedImage.size.height)
                 print("Trimmed image size: \(trimmedWidth) x \(trimmedHeight)")
                 
+                
                 // Saves the trimmed image to the camera roll
                 UIImageWriteToSavedPhotosAlbum(trimmedImage, nil, nil, nil)
+                
+                withAnimation(.easeInOut(duration: 0.4)){
+                    showSavedMessage = true
+                }
+                
+                DispatchQueue.main.asyncAfter(deadline: .now() + 2.2) {
+                            withAnimation {
+                                showSavedMessage = false
+                            }
+                        }
+                
             }
             
             controller.view.removeFromSuperview()
@@ -119,4 +147,3 @@ struct DrawingView: View {
 
         @State private var showAlert = false
 }
-

@@ -12,7 +12,9 @@ struct AddNewFolderView: View {
     @State private var folderName = ""
     @State private var showAlert = false
     
+    var folderCreationHandler: () -> Void
 
+    
     
     var body: some View {
         NavigationView {
@@ -58,16 +60,18 @@ struct AddNewFolderView: View {
 
             do {
                 try viewContext.save()
+                folderCreationHandler()
                 presentationMode.wrappedValue.dismiss()
             } catch {
                 print("Error saving folder: \(error)")
             }
         }
     }
+    
 }
 
 struct AddNewFolderView_Previews: PreviewProvider {
     static var previews: some View {
-        AddNewFolderView().environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
+        AddNewFolderView(folderCreationHandler: {}).environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
     }
 }

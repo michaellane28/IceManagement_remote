@@ -16,6 +16,8 @@ struct AddDrawingInView: View {
 
     @State private var canvasTitle = ""
     @State private var selectedBackgroundImage = "hockey_rink"
+    
+    var drawingCreationHandler: () -> Void
 
     var body: some View {
         NavigationView {
@@ -97,6 +99,7 @@ struct AddDrawingInView: View {
 
                 do {
                     try viewContext.save()
+                    drawingCreationHandler()
                     presentationMode.wrappedValue.dismiss()
                 } catch {
                     print("Error saving new drawing: \(error)")
@@ -108,7 +111,7 @@ struct AddDrawingInView: View {
 
 struct AddDrawingInView_Previews: PreviewProvider {
     static var previews: some View {
-        AddDrawingInView(folder: Folder())
+        AddDrawingInView(folder: Folder(), drawingCreationHandler: {})
             .environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
     }
 }
