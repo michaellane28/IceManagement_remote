@@ -38,16 +38,6 @@ struct ContentView: View {
     @State private var showDrawingCreatedMessage = false
 
     var body: some View {
-        /*
-        Image("rink_icon")
-            .resizable()
-            .scaledToFit()
-            .frame(width: 600, height: 300)
-            .listRowBackground(Color.clear)
-            .frame(maxWidth: .infinity, alignment: .center)
-            .padding(.bottom, -110)
-            //.padding(.top, -100)
-         */
         
             // Navigation Stack that allows for clean look of home screen
             NavigationStack {
@@ -195,6 +185,9 @@ struct ContentView: View {
                         }
                     )
                 }
+                .onAppear {
+                    requestPhotoLibraryAccess()
+                }
             }
         }
     
@@ -217,6 +210,23 @@ struct ContentView: View {
                 .padding(.top, -360)
         }
     }
+    
+    private func requestPhotoLibraryAccess() {
+                PHPhotoLibrary.requestAuthorization { status in
+                    switch status {
+                    case .authorized:
+                        print("Photo Library Access Granted")
+                    case .denied, .restricted:
+                        print("Photo Library Access Denied or Restricted")
+                    case .notDetermined:
+                        print("Photo Library Access State Not Determined")
+                    case .limited:
+                        print("Photo Library Access Limited")
+                    @unknown default:
+                        print("Unknown authorization status")
+                    }
+                }
+            }
 
     
     // Function for deleting drawing

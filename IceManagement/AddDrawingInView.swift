@@ -38,6 +38,7 @@ struct AddDrawingInView: View {
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)
                                 .frame(width: 300, height: 300)
+                                .cornerRadius(10)
                                 .overlay(
                                     RoundedRectangle(cornerRadius: 10)
                                         .stroke(selectedBackgroundImage == "hockey_rink" ? Color.blue : Color.clear, lineWidth: 2)
@@ -53,6 +54,7 @@ struct AddDrawingInView: View {
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)
                                 .frame(width: 300, height: 300)
+                                .cornerRadius(10)
                                 .overlay(
                                     RoundedRectangle(cornerRadius: 10)
                                         .stroke(selectedBackgroundImage == "half_rink" ? Color.blue : Color.clear, lineWidth: 2)
@@ -64,7 +66,15 @@ struct AddDrawingInView: View {
                 }
             }
             .scrollContentBackground(.hidden)
-            .background(Image("new_canvas_background").resizable().scaledToFill().edgesIgnoringSafeArea(.all))
+            .background(
+                GeometryReader { geometry in
+                        Image("new_canvas_background")
+                            .resizable()
+                            .scaledToFill()
+                            .frame(width: geometry.size.width)
+                    }
+                    .edgesIgnoringSafeArea(.all)
+            )
             .navigationViewStyle(StackNavigationViewStyle())
             .navigationBarItems(leading: Button(action: {
                 presentationMode.wrappedValue.dismiss()

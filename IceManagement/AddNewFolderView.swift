@@ -27,8 +27,15 @@ struct AddNewFolderView: View {
                 }
             }
             .scrollContentBackground(.hidden)
-            .background(Image("new_canvas_background").resizable().scaledToFill().edgesIgnoringSafeArea(.all))
-
+            .background(
+                GeometryReader { geometry in
+                        Image("new_canvas_background")
+                            .resizable()
+                            .scaledToFill()
+                            .frame(width: geometry.size.width)
+                    }
+                    .edgesIgnoringSafeArea(.all)
+            )
             .navigationBarItems(leading: Button(action: {
                 presentationMode.wrappedValue.dismiss()
             }, label: {
